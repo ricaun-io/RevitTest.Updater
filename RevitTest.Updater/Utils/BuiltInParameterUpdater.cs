@@ -40,6 +40,18 @@ namespace RevitTest.Updater.Utils
 
                 System.Console.WriteLine($"{id} [{string.Join(" ", changes)}]");
             }
+
+            var customChanged = ids.ToDictionary(e => e,
+                e => GetTriggeredCustom(data, e).ToArray());
+
+            foreach (var idChangeType in customChanged)
+            {
+                var id = idChangeType.Key;
+                var changes = idChangeType.Value;
+
+                if (changes.Any())
+                    System.Console.WriteLine($"{id} [{string.Join(" ", changes)}]");
+            }
         }
 
         private string GetValueParameter(Document document, ElementId elementId, BuiltInParameter builtInParameter)
@@ -89,6 +101,20 @@ namespace RevitTest.Updater.Utils
             var values = Enum.GetValues(typeof(BuiltInParameter)).Cast<BuiltInParameter>();
             var changeTypes = values.Select(e => Element.GetChangeTypeParameter(new ElementId(e)));
             return changeTypes;
+        }
+
+        private IEnumerable<string> GetTriggeredCustom(UpdaterData data, ElementId elementId)
+        {
+            var list = new List<string>();
+
+            var values = new Dictionary<ChangeType, string> {
+                {Element.GetChangeTypeAny(), "Any" },
+                {Element.GetChangeTypeElementAddition(), "Element Addition" },
+                {Element.GetChangeTypeElementDeletion(), "Element Deletion" },
+                {Element.GetChangeTypeGeometry(), "Geometry" }
+            };
+
+            return list;
         }
 
         private IEnumerable<BuiltInParameter> GetTriggeredBuiltInParameters(UpdaterData data, ElementId elementId)

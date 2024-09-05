@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace RevitTest.Updater
 {
-    public class WallTests : OneTimeOpenDocumentTest
+    public class WallUpdaterTests : OneTimeOpenDocumentTest
     {
         public BuiltInParameterUpdater builtInParameterUpdater;
         [OneTimeSetUp]
@@ -52,6 +52,9 @@ namespace RevitTest.Updater
 
             Assert.AreEqual(12, wall.GetLenght());
             Assert.IsTrue(builtInParameterUpdater.ElementIdChangeType[wall.Id].Contains(BuiltInParameter.INVALID));
+
+            // This should contain CURVE_ELEM_LENGTH but Revit does not consider the parameter as change using 'UpdaterData.IsChangeTriggered'.
+            Assert.IsFalse(builtInParameterUpdater.ElementIdChangeType[wall.Id].Contains(BuiltInParameter.CURVE_ELEM_LENGTH));
 
             using (Transaction transaction = new Transaction(document))
             {
