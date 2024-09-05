@@ -78,6 +78,10 @@ namespace RevitTest.Updater.Utils
         public Guid GetId() => guid;
         public ElementFilter GetElementFilter()
         {
+            //return new LogicalAndFilter(
+            //    new ElementIsElementTypeFilter(true),
+            //    new ElementCategoryFilter(BuiltInCategory.OST_Walls));
+
             return new ElementCategoryFilter(BuiltInCategory.INVALID, true);
         }
         private void AddTriggerAllBuiltInParameter()

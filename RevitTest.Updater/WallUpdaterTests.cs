@@ -34,6 +34,7 @@ namespace RevitTest.Updater
                 var start = new XYZ(0, 0, 0);
                 var end = new XYZ(10, 0, 0);
                 wall = document.CreateWall(start, end);
+                System.Console.WriteLine($"CreateWall: {wall.Id}");
 
                 transaction.Commit();
             }
