@@ -12,7 +12,7 @@ The sample project to test `IUpdate` using the [ricaun.RevitTest](https://ricaun
 
 ### WallUpdaterTests
 
-This test uses the `BuiltInParameterUpdater` to register all the `BuiltInParameter` to check what parameter is changed when the wall is modified.
+This test uses the `BuiltInParameterUpdater` to register the parameter `BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS` and `BuiltInParameter.CURVE_ELEM_LENGTH` to check what parameter is trigger when the wall is modified.
 
 Two thing is tested, the wall `Comments` changed and the wall `Curve` length changed.
 
