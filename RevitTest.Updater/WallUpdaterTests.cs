@@ -13,7 +13,7 @@ namespace RevitTest.Updater
         public void UpdaterRegister(UIApplication uiapp)
         {
             this.builtInParameterUpdater = new BuiltInParameterUpdater(uiapp.ActiveAddInId);
-            this.builtInParameterUpdater.Register();
+            this.builtInParameterUpdater.Register(BuiltInParameter.CURVE_ELEM_LENGTH, BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS);
         }
 
         [OneTimeTearDown]
@@ -52,9 +52,9 @@ namespace RevitTest.Updater
             }
 
             Assert.AreEqual(12, wall.GetLenght());
-            Assert.IsTrue(builtInParameterUpdater.ElementIdChangeType[wall.Id].Contains(BuiltInParameter.INVALID));
 
             // This should contain CURVE_ELEM_LENGTH but Revit does not consider the parameter as change using 'UpdaterData.IsChangeTriggered'.
+            Assert.IsTrue(builtInParameterUpdater.ElementIdChangeType[wall.Id].Contains(BuiltInParameter.INVALID));
             Assert.IsFalse(builtInParameterUpdater.ElementIdChangeType[wall.Id].Contains(BuiltInParameter.CURVE_ELEM_LENGTH));
 
             using (Transaction transaction = new Transaction(document))

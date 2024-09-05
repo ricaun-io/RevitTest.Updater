@@ -84,10 +84,10 @@ namespace RevitTest.Updater.Utils
 
             return new ElementCategoryFilter(BuiltInCategory.INVALID, true);
         }
-        private void AddTriggerAllBuiltInParameter()
+        private void AddTriggerAllBuiltInParameter(params BuiltInParameter[] builtInParameters)
         {
             var elementFilter = GetElementFilter();
-            var changeTypes = GetChangeTypes();
+            var changeTypes = GetChangeTypes(builtInParameters);
             foreach (var changeType in changeTypes)
             {
                 UpdaterRegistry.AddTrigger(GetUpdaterId(), elementFilter, changeType);
@@ -96,14 +96,19 @@ namespace RevitTest.Updater.Utils
             UpdaterRegistry.AddTrigger(GetUpdaterId(), elementFilter, Element.GetChangeTypeAny());
         }
 
-        private IEnumerable<ChangeType> GetChangeTypes()
+        private IEnumerable<ChangeType> GetChangeTypes(params BuiltInParameter[] builtInParameters)
         {
             //return new[] { 
             //    Element.GetChangeTypeParameter(new ElementId(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS)),
             //    Element.GetChangeTypeParameter(new ElementId(BuiltInParameter.HOST_VOLUME_COMPUTED))
             //};
-            var values = Enum.GetValues(typeof(BuiltInParameter)).Cast<BuiltInParameter>();
-            var changeTypes = values.Select(e => Element.GetChangeTypeParameter(new ElementId(e)));
+
+            if (builtInParameters.Length == 0)
+            {
+                builtInParameters = Enum.GetValues(typeof(BuiltInParameter)).Cast<BuiltInParameter>().ToArray();
+            }
+
+            var changeTypes = builtInParameters.Select(e => Element.GetChangeTypeParameter(new ElementId(e)));
             return changeTypes;
         }
 
@@ -145,13 +150,13 @@ namespace RevitTest.Updater.Utils
                 UpdaterRegistry.DisableUpdater(GetUpdaterId());
         }
 
-        public void Register()
+        public void Register(params BuiltInParameter[] builtInParameters)
         {
             if (UpdaterRegistry.IsUpdaterRegistered(GetUpdaterId())) return;
 
             UpdaterRegistry.RegisterUpdater(this, true);
 
-            AddTriggerAllBuiltInParameter();
+            AddTriggerAllBuiltInParameter(builtInParameters);
         }
 
         public void Unregister()
