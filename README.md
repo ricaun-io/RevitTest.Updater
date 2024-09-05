@@ -20,6 +20,17 @@ Two thing is tested, the wall `Comments` changed and the wall `Curve` length cha
 
 * When the wall is extended or the geometry lenght is changed, the update not trigger with `BuiltInParameter.CURVE_ELEM_LENGTH` as the source of the updater, the `INVALID` is used to indicate that the updater did not find the parameter that was changed.
 
+## References
+
+* [RevitAddin.UpdaterTester](https://github.com/ricaun-io/RevitAddin.UpdaterTester)
+* [Revit API Forum - IUpdater does not work?](https://forums.autodesk.com/t5/revit-api-forum/iupdater-does-not-work/td-p/11264539)
+
+## Video
+
+Video in english about this project.
+
+[![VideoIma1]][Video1]
+
 ## License
 
 This project is [licensed](LICENSE) under the [MIT License](https://en.wikipedia.org/wiki/MIT_License).
@@ -27,3 +38,6 @@ This project is [licensed](LICENSE) under the [MIT License](https://en.wikipedia
 ---
 
 Do you like this project? Please [star this project on GitHub](../../stargazers)!
+
+[Video1]: https://youtu.be/L-NuSBzscFk
+[VideoIma1]: https://img.youtube.com/vi/L-NuSBzscFk/mqdefault.jpg
