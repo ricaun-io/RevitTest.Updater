@@ -27,7 +27,7 @@ namespace RevitTest.Updater.Utils
             return wall;
         }
 
-        public static double GetLenght(this Wall wall)
+        public static double GetLength(this Wall wall)
         {
             return wall.get_Parameter(BuiltInParameter.CURVE_ELEM_LENGTH).AsDouble();
         }
